@@ -5,7 +5,7 @@ function Header({ titulo }) {
   return (
     <Container className="text-center mt-4 mb-4">
       <h1>{titulo}</h1>
-      <hr />
+      <hr/>
     </Container>
   );
 }
