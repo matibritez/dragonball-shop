@@ -1,11 +1,16 @@
 import React, { useState } from "react";
+import { BrowserRouter as Router, Routes, Route} from "react-router-dom";
 import NavbarMenu from "./components/Navbar";
-import { BrowserRouter as Router } from "react-router-dom";
+import Home from "./Pages/Home";
+
 
 function App() {
   return (
    <Router>
-    <NavbarMenu />
+    <NavbarMenu/>
+    <Routes>
+      <Route path="/" element={<Home/>}/>
+    </Routes>
    </Router>
   );
 }
