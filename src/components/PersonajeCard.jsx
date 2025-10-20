@@ -1,52 +1,29 @@
-import React, { useState } from 'react';
-import { Card, Button, Toast, ToastContainer } from 'react-bootstrap';
+import React from "react";
+import { Card, Button } from "react-bootstrap";
 
-const PersonajeCard = ({ personaje }) => {
-  const [stats] = useState({
-    fuerza: Math.floor(Math.random() * 100) + 1,
-    velocidad: Math.floor(Math.random() * 100) + 1,
-    tecnica: Math.floor(Math.random() * 100) + 1,
-  });
+function PersonajeCard({ personaje, agregarAlCarrito }) {
+  // Generamos un precio aleatorio entre 100 y 500
+  const precio = Math.floor(Math.random() * 400) + 100;
 
-  const [showToast, setShowToast] = useState(false);
-
-  const handleAgregarCarrito = () => {
-    setShowToast(true);
-    setTimeout(() => setShowToast(false), 2000);
+  const handleAgregar = () => {
+    agregarAlCarrito({ ...personaje, precio, cantidad: 1 });
   };
 
   return (
-    <>
-      <Card className="m-2" style={{ width: '16rem' }}>
-        <Card.Img
-          variant="top"
-          src={personaje.images?.jpg?.image_url || 'https://via.placeholder.com/150'}
-          alt={personaje.name}
-        />
-        <Card.Body>
-          <Card.Title>{personaje.name}</Card.Title>
-          <Card.Text>
-            <strong>Fuerza:</strong> {stats.fuerza} <br />
-            <strong>Velocidad:</strong> {stats.velocidad} <br />
-            <strong>Técnica:</strong> {stats.tecnica}
-          </Card.Text>
-          <Button variant="primary" onClick={handleAgregarCarrito}>
-            Agregar al carrito
-          </Button>
-        </Card.Body>
-      </Card>
-
-      {/* Toast de notificación */}
-      <ToastContainer position="bottom-end" className="p-3">
-        <Toast show={showToast} bg="success" onClose={() => setShowToast(false)}>
-          <Toast.Header>
-            <strong className="me-auto">Carrito</strong>
-          </Toast.Header>
-          <Toast.Body>¡{personaje.name} agregado al carrito!</Toast.Body>
-        </Toast>
-      </ToastContainer>
-    </>
+    <Card className="m-2" style={{ width: "15rem" }}>
+      <Card.Img variant="top" src={personaje.images.jpg.image_url} />
+      <Card.Body>
+        <Card.Title>{personaje.name}</Card.Title>
+        <Card.Text>
+          Fuerza: {Math.floor(Math.random() * 100)} <br />
+          Velocidad: {Math.floor(Math.random() * 100)} <br />
+          Técnica: {Math.floor(Math.random() * 100)} <br />
+          <strong>Precio: ${precio}</strong>
+        </Card.Text>
+        <Button onClick={handleAgregar} variant="primary">Agregar al carrito</Button>
+      </Card.Body>
+    </Card>
   );
-};
+}
 
 export default PersonajeCard;
