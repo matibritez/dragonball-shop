@@ -4,6 +4,7 @@ import NavbarMenu from "./components/Navbar";
 import Home from "./Pages/Home";
 import Personajes from "./pages/Personajes";
 import Carrito from "./Pages/Carrito";
+import Contacto from "./Pages/Contacto";
 import { Toast, ToastContainer } from "react-bootstrap";
 
 function App() {
@@ -51,6 +52,7 @@ function App() {
           path="/carrito"
           element={<Carrito carrito={carrito} cambiarCantidad={cambiarCantidad} />}
         />
+        <Route path="/contacto" element={<Contacto/>} />
       </Routes>
 
       <ToastContainer position="top-end" className="p-3">
