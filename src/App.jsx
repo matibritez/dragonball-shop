@@ -5,12 +5,12 @@ import Home from "./Pages/Home";
 import Personajes from "./pages/Personajes";
 import Carrito from "./Pages/Carrito";
 import Contacto from "./Pages/Contacto";
-import { Toast, ToastContainer } from "react-bootstrap";
+import Footer from "./components/Footer";
 
 function App() {
   const [carrito, setCarrito] = useState([]);
-  const [showToast, setShowToast] = useState(false);
-  const [toastMessage, setToastMessage] = useState("");
+  const [showNotification, setShowNotification] = useState(false);
+  const [notificationMessage, setNotificationMessage] = useState("");
 
   const agregarAlCarrito = (producto) => {
     setCarrito((prev) => {
@@ -22,11 +22,12 @@ function App() {
             : p
         );
       } else {
-        return [...prev, producto];
+        return [...prev, { ...producto, cantidad: 1 }];
       }
     });
-    setToastMessage(`${producto.name} agregado al carrito`);
-    setShowToast(true);
+    setNotificationMessage(`${producto.name} agregado al carrito`);
+    setShowNotification(true);
+    setTimeout(() => setShowNotification(false), 2000);
   };
 
   const cambiarCantidad = (mal_id, cantidad) => {
@@ -37,6 +38,14 @@ function App() {
         )
         .filter((p) => p.cantidad > 0)
     );
+  };
+
+  // Función para finalizar compra desde Carrito
+  const finalizarCompra = () => {
+    setCarrito([]); // Vaciar carrito
+    setNotificationMessage("✅ ¡Compra finalizada con éxito!");
+    setShowNotification(true);
+    setTimeout(() => setShowNotification(false), 2000);
   };
 
   return (
@@ -50,22 +59,39 @@ function App() {
         />
         <Route
           path="/carrito"
-          element={<Carrito carrito={carrito} cambiarCantidad={cambiarCantidad} />}
+          element={
+            <Carrito
+              carrito={carrito}
+              cambiarCantidad={cambiarCantidad}
+              finalizarCompra={finalizarCompra} // Pasamos la función
+            />
+          }
         />
-        <Route path="/contacto" element={<Contacto/>} />
+        <Route path="/contacto" element={<Contacto />} />
       </Routes>
 
-      <ToastContainer position="top-end" className="p-3">
-        <Toast
-          bg="success"
-          onClose={() => setShowToast(false)}
-          show={showToast}
-          delay={2000}
-          autohide
+      {/* Notificación abajo a la derecha */}
+      {showNotification && (
+        <div
+          style={{
+            position: "fixed",
+            bottom: "20px",
+            right: "20px",
+            backgroundColor: "#198754",
+            color: "white",
+            padding: "15px 20px",
+            borderRadius: "8px",
+            boxShadow: "0px 0px 10px rgba(0,0,0,0.3)",
+            zIndex: 9999,
+            transition: "all 0.3s ease",
+            fontWeight: "bold",
+          }}
         >
-          <Toast.Body className="text-white">{toastMessage}</Toast.Body>
-        </Toast>
-      </ToastContainer>
+          {notificationMessage}
+        </div>
+      )}
+
+      <Footer />
     </Router>
   );
 }

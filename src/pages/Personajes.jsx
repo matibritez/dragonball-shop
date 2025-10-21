@@ -12,10 +12,19 @@ const Personajes = ({ agregarAlCarrito }) => {
     try {
       setLoading(true);
       setError(null);
+
       const res = await fetch('https://api.jikan.moe/v4/anime/813/characters'); 
       if (!res.ok) throw new Error('Error en la API');
+
       const data = await res.json();
-      setPersonajes(data.data.slice(0, 24));
+
+      // Agregamos precio aleatorio a cada personaje
+      const personajesConPrecio = data.data.slice(0, 24).map(p => ({
+        ...p.character,
+        price: Math.floor(Math.random() * 200) + 50 // precio entre 50 y 250
+      }));
+
+      setPersonajes(personajesConPrecio);
     } catch (err) {
       console.error(err);
       setError('Error al cargar los personajes');
@@ -47,8 +56,8 @@ const Personajes = ({ agregarAlCarrito }) => {
       <Row className="d-flex flex-wrap justify-content-center">
         {personajes.map((p) => (
           <PersonajeCard 
-            key={p.character.mal_id} 
-            personaje={p.character} 
+            key={p.mal_id} 
+            personaje={p} 
             agregarAlCarrito={agregarAlCarrito} 
           />
         ))}
