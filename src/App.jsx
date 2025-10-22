@@ -6,6 +6,7 @@ import Carrito from "./Pages/Carrito";
 import Login from "./Pages/Login";
 import NavbarMenu from "./components/Navbar";
 import Contacto from "./Pages/Contacto";
+import Footer from "./components/Footer";
 
 function App() {
   const [carrito, setCarrito] = useState([]);
@@ -65,6 +66,7 @@ function App() {
         <Route path="/login" element={<Login onLogin={login} />} />
         <Route path="/contacto" element={<Contacto />} />
       </Routes>
+      <Footer/>
     </Router>
   );
 }

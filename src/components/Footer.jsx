@@ -15,7 +15,7 @@ function Footer() {
     >
       <Container>
         <p className="mb-2">
-          © {new Date().getFullYear()} <strong>DragonBallZ Store</strong> — Todos
+          © {new Date().getFullYear()} <strong>DragonBallZ Shop</strong> — Todos
           los derechos reservados.
         </p>
 
